@@ -37,30 +37,30 @@ export declare class CentralSystem {
   constructor(
     port: number,
     cpHandler: RequestHandler<ChargePointAction, RequestMetadata>,
-    options: CentralSystemOptions = {}
-  )
+    options: CentralSystemOptions = {},
+  );
 }
 ```
 
 **Example**
 
 ```ts
-import { CentralSystem } from '@voltbras/ts-ocpp'
+import { CentralSystem } from "@voltbras/ts-ocpp";
 
 // port and request handler as arguments
 const centralSystem = new CentralSystem(3000, (req, { chargePointId }) => {
   switch (req.action) {
-    case 'Heartbeat':
+    case "Heartbeat":
       // returns a successful response
       // (we pass the action and ocpp version so typescript knows which fields are needed)
       return {
         action: req.action,
         ocppVersion: req.ocppVersion,
         currentTime: new Date().toISOString(),
-      }
+      };
   }
-  throw new Error('message not supported')
-})
+  throw new Error("message not supported");
+});
 ```
 
 ### addConnectionListener (method)
@@ -94,20 +94,12 @@ sendRequest<V extends OCPPVersion, T extends CentralSystemAction>(args: CSSendRe
 **Signature**
 
 ```ts
-export type CSSendRequestArgs<T extends CentralSystemAction<V>, V extends OCPPVersion> =
-  | {
-      ocppVersion: 'v1.6-json'
-      chargePointId: string
-      payload: Omit<Request<T, V>, 'action' | 'ocppVersion'>
-      action: T
-    }
-  | {
-      ocppVersion: 'v1.5-soap'
-      chargePointUrl: string
-      chargePointId: string
-      payload: Omit<Request<T, V>, 'action' | 'ocppVersion'>
-      action: T
-    }
+export type CSSendRequestArgs<T extends CentralSystemAction<V>, V extends OCPPVersion> = {
+  ocppVersion: "v1.6-json";
+  chargePointId: string;
+  payload: Omit<Request<T, V>, "action" | "ocppVersion">;
+  action: T;
+};
 ```
 
 ## CentralSystemOptions (type alias)
@@ -117,20 +109,22 @@ export type CSSendRequestArgs<T extends CentralSystemAction<V>, V extends OCPPVe
 ```ts
 export type CentralSystemOptions = {
   /** if the chargepoint sends an invalid request(in ocpp v1.6), we can still forward it to the handler */
-  rejectInvalidRequests?: boolean
+  rejectInvalidRequests?: boolean;
   /** default is 0.0.0.0 */
-  host?: string
+  host?: string;
   /**
    * can be used to log exactly what the chargepoint sends to this central system without any processing
    * @example
    * onRawSocketData: (data) => console.log(data.toString('ascii'))
    **/
-  onRawSocketData?: (data: Buffer) => void
-  onRawSoapData?: (type: 'replied' | 'received', data: string) => void
-  onRawWebsocketData?: (data: WebSocket.Data, metadata: Omit<RequestMetadata, 'validationError'>) => void
+  onRawSocketData?: (data: Buffer) => void;
+  onRawWebsocketData?: (
+    data: WebSocket.Data,
+    metadata: Omit<RequestMetadata, "validationError">,
+  ) => void;
   /** in milliseconds */
-  websocketPingInterval?: number
-}
+  websocketPingInterval?: number;
+};
 ```
 
 ## RequestMetadata (type alias)
@@ -139,8 +133,8 @@ export type CentralSystemOptions = {
 
 ```ts
 export type RequestMetadata = {
-  chargePointId: string
-  httpRequest: IncomingMessage
-  validationError?: ValidationError
-}
+  chargePointId: string;
+  httpRequest: IncomingMessage;
+  validationError?: ValidationError;
+};
 ```

@@ -3,7 +3,7 @@ title: Home
 nav_order: 1
 ---
 
-OCPP (Open Charge Point Protocol) implemented in Typescript. Supports [OCPP-JSON v1.6](https://www.oasis-open.org/committees/download.php/58944/ocpp-1.6.pdf) and OCPP-SOAP v1.5.
+OCPP (Open Charge Point Protocol) implemented in Typescript. Supports [OCPP-JSON v1.6](https://www.oasis-open.org/committees/download.php/58944/ocpp-1.6.pdf).
 
 ## install
 

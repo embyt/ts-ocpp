@@ -4,7 +4,6 @@
     "src/messages/cp/**/*.ts",
     "src/messages/cs/**/*.ts",
     "src/messages/validation.ts",
-    "src/soap/**/*.ts",
     "src/ws/**/*.ts",
     "**/*.spec.ts",
     "src/types.ts",

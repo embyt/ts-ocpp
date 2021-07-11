@@ -2,4 +2,3 @@ dist
 node_modules
 examples
 src/messages/json/
-src/messages/soap/

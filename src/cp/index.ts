@@ -1,24 +1,17 @@
-import { Request, RequestHandler, Response } from '../messages';
-import { CentralSystemAction, centralSystemActions } from '../messages/cs';
-import WebSocket from 'ws';
-import { Connection, SUPPORTED_PROTOCOLS } from '../ws';
-import { ChargePointAction, chargePointActions } from '../messages/cp';
-import { EitherAsync, Left } from 'purify-ts';
-import { OCPPRequestError, ValidationError } from '../errors';
-import { OCPPVersion } from '../types';
+import { Request, RequestHandler, Response } from "../messages";
+import { CentralSystemAction, centralSystemActions } from "../messages/cs";
+import WebSocket from "ws";
+import { Connection, SUPPORTED_PROTOCOLS } from "../ws";
+import { ChargePointAction, chargePointActions } from "../messages/cp";
+import { EitherAsync, Left } from "purify-ts";
+import { OCPPRequestError, ValidationError } from "../errors";
+import { OCPPVersion } from "../types";
 
 export type CPSendRequestArgs<T extends ChargePointAction<V>, V extends OCPPVersion> = {
-  ocppVersion: 'v1.6-json',
-  payload: Omit<Request<T, V>, 'action' | 'ocppVersion'>,
-  action: T,
+  ocppVersion: "v1.6-json";
+  payload: Omit<Request<T, V>, "action" | "ocppVersion">;
+  action: T;
 };
-// | {
-//   ocppVersion: 'v1.5-soap',
-//   chargePointUrl: string,
-//   chargePointId: string,
-//   payload: Omit<Request<T, V>, 'action' | 'ocppVersion'>,
-//   action: T,
-// };
 
 /**
  * Represents a connection to the central system
@@ -46,13 +39,17 @@ export type CPSendRequestArgs<T extends ChargePointAction<V>, V extends OCPPVers
  * @category Charge Point
  */
 export default class ChargePoint {
-  private connection?: Connection<CentralSystemAction<'v1.6-json'>>;
+  private connection?: Connection<CentralSystemAction<"v1.6-json">>;
 
   constructor(
     readonly id: string,
-    private readonly requestHandler: RequestHandler<CentralSystemAction<'v1.6-json'>, ValidationError | undefined, 'v1.6-json'>,
-    private readonly csUrl: string
-  ) { }
+    private readonly requestHandler: RequestHandler<
+      CentralSystemAction<"v1.6-json">,
+      ValidationError | undefined,
+      "v1.6-json"
+    >,
+    private readonly csUrl: string,
+  ) {}
 
   async connect(): Promise<void> {
     const url = `${this.csUrl}/${this.id}`;
@@ -65,19 +62,18 @@ export default class ChargePoint {
       chargePointActions,
     );
     // this.socket.on('close', () => (this.socket = undefined));
-    socket.on('error', console.error);
-    socket.on('message', (data) => this.connection?.handleWebsocketData(data));
+    socket.on("error", console.error);
+    socket.on("message", (data) => this.connection?.handleWebsocketData(data));
 
     return new Promise((resolve) => {
-      socket?.on('open', () => resolve());
+      socket?.on("open", () => resolve());
     });
   }
-
 
   /**
    * @example
    * import { ChargePoint } from '@voltbras/ts-ocpp';
-   * 
+   *
    * async function communicate(chargePoint: ChargePoint) {
    *   const response = await chargePoint.sendRequest({ action: 'Heartbeat', ocppVersion: 'v1.6-json', payload: {}});
    *   // it can be used in a functional way
@@ -86,16 +82,19 @@ export default class ChargePoint {
    *   const unsafeResponse = response.unsafeCoerce();
    * }
    */
-  sendRequest<T extends ChargePointAction>(args: CPSendRequestArgs<T, 'v1.6-json'>): EitherAsync<OCPPRequestError, Response<T>> {
+  sendRequest<T extends ChargePointAction>(
+    args: CPSendRequestArgs<T, "v1.6-json">,
+  ): EitherAsync<OCPPRequestError, Response<T>> {
     return EitherAsync.fromPromise(async () => {
-      if (!this.connection) return Left(new OCPPRequestError('there is no connection to the central system'));
+      if (!this.connection)
+        return Left(new OCPPRequestError("there is no connection to the central system"));
       const request = {
         ...args.payload,
         action: args.action,
-        ocppVersion: args.ocppVersion
-      } as Request<T, 'v1.6-json'>;
+        ocppVersion: args.ocppVersion,
+      } as Request<T, "v1.6-json">;
       return await this.connection.sendRequest(args.action, request);
-    })
+    });
   }
 
   close() {
