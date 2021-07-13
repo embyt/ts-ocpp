@@ -8,9 +8,7 @@ OCPP (Open Charge Point Protocol) implemented in Typescript. Supports [OCPP-JSON
 ## install
 
 ```bash
-yarn add @voltbras/ts-ocpp
-# OR
-npm install @voltbras/ts-ocpp --save
+npm install github:embyt/ts-ocpp --save
 ```
 
 ## instructions

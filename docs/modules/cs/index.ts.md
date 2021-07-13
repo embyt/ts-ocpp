@@ -45,7 +45,7 @@ export declare class CentralSystem {
 **Example**
 
 ```ts
-import { CentralSystem } from "@voltbras/ts-ocpp";
+import { CentralSystem } from "ts-ocpp";
 
 // port and request handler as arguments
 const centralSystem = new CentralSystem(3000, (req, { chargePointId }) => {

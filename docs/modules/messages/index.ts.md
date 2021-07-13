@@ -31,10 +31,11 @@ so when using this it is advisable to do type assertions.
 **Signature**
 
 ```ts
-export type RequestHandler<T extends ActionName<V>, Metadata = undefined, V extends OCPPVersion = OCPPVersion> = (
-  request: Request<T, V>,
-  extra: Metadata
-) => Result<Response<T, V>>
+export type RequestHandler<
+  T extends ActionName<V>,
+  Metadata = undefined,
+  V extends OCPPVersion = OCPPVersion,
+> = (request: Request<T, V>, extra: Metadata) => Result<Response<T, V>>;
 ```
 
 # Message Type
@@ -44,15 +45,18 @@ export type RequestHandler<T extends ActionName<V>, Metadata = undefined, V exte
 **Signature**
 
 ```ts
-export type Request<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<T, V>['request']
+export type Request<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<
+  T,
+  V
+>["request"];
 ```
 
 **Example**
 
 ```ts
-import { Request } from '@voltbras/ts-ocpp'
+import { Request } from "ts-ocpp";
 
-type ChargeRelatedRequest = Request<'StartTransaction' | 'StopTransaction'>
+type ChargeRelatedRequest = Request<"StartTransaction" | "StopTransaction">;
 ```
 
 ## Response (type alias)
@@ -60,15 +64,18 @@ type ChargeRelatedRequest = Request<'StartTransaction' | 'StopTransaction'>
 **Signature**
 
 ```ts
-export type Response<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<T, V>['response']
+export type Response<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<
+  T,
+  V
+>["response"];
 ```
 
 **Example**
 
 ```ts
-import { Response } from '@voltbras/ts-ocpp'
+import { Response } from "ts-ocpp";
 
-type ChargeRelatedResponse = Response<'StartTransaction' | 'StopTransaction'>
+type ChargeRelatedResponse = Response<"StartTransaction" | "StopTransaction">;
 ```
 
 # utils
@@ -78,5 +85,7 @@ type ChargeRelatedResponse = Response<'StartTransaction' | 'StopTransaction'>
 **Signature**
 
 ```ts
-export type ActionName<V extends OCPPVersion = OCPPVersion> = ChargePointAction<V> | CentralSystemAction<V>
+export type ActionName<V extends OCPPVersion = OCPPVersion> =
+  | ChargePointAction<V>
+  | CentralSystemAction<V>;
 ```

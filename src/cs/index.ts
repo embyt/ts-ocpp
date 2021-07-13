@@ -3,15 +3,12 @@
  */
 import WebSocket from "ws";
 import { IncomingMessage, createServer, Server } from "http";
-import { ActionName, Request, RequestHandler, Response } from "../messages";
+import { Request, RequestHandler, Response } from "../messages";
 import { ChargePointAction, chargePointActions } from "../messages/cp";
 import { Connection, SUPPORTED_PROTOCOLS } from "../ws";
 import { CentralSystemAction, centralSystemActions } from "../messages/cs";
 import { OCPPRequestError, ValidationError } from "../errors";
 import { EitherAsync, Left } from "purify-ts";
-import * as fs from "fs";
-import * as path from "path";
-import * as uuid from "uuid";
 import { OCPPVersion } from "../types";
 
 const handleProtocols = (protocols: string[]): string =>
@@ -57,7 +54,7 @@ type RequiredPick<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
  * Represents the central system, can communicate with charge points
  *
  * @example
- * import { CentralSystem } from '@voltbras/ts-ocpp';
+ * import { CentralSystem } from 'ts-ocpp';
  *
  * // port and request handler as arguments
  * const centralSystem = new CentralSystem(3000, (req, { chargePointId }) => {

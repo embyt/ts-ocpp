@@ -5,9 +5,7 @@
 ## install
 
 ```bash
-yarn add @voltbras/ts-ocpp
-# OR
-npm install @voltbras/ts-ocpp --save
+npm install github:embyt/ts-ocpp --save
 ```
 
 ## instruction
