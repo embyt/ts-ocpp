@@ -1,18 +1,12 @@
-import { OCPPVersion } from "../types";
 import ChargePointMessage, { ChargePointAction } from "./cp";
 import CentralSystemMessage, { CentralSystemAction } from "./cs";
 
-export type ActionName<V extends OCPPVersion = OCPPVersion> =
-  | ChargePointAction<V>
-  | CentralSystemAction<V>;
+export type ActionName = ChargePointAction | CentralSystemAction;
 
-type ReqRes<
-  T extends ActionName<V>,
-  V extends OCPPVersion = OCPPVersion,
-> = T extends ChargePointAction<V>
-  ? ChargePointMessage<V>[T]
-  : T extends CentralSystemAction<V>
-  ? CentralSystemMessage<V>[T]
+type ReqRes<T extends ActionName> = T extends ChargePointAction
+  ? ChargePointMessage[T]
+  : T extends CentralSystemAction
+  ? CentralSystemMessage[T]
   : never;
 
 /**
@@ -23,10 +17,7 @@ type ReqRes<
  *
  * @category Message Type
  */ // @ts-ignore, TS somehow doesn't recognize that there is a request property
-export type Request<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<
-  T,
-  V
->["request"];
+export type Request<T extends ActionName> = ReqRes<T>["request"];
 
 /**
  * @example
@@ -36,10 +27,7 @@ export type Request<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion
  *
  * @category Message Type
  */ // @ts-ignore, TS somehow doesn't recognize that there is a response property
-export type Response<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<
-  T,
-  V
->["response"];
+export type Response<T extends ActionName> = ReqRes<T>["response"];
 
 type Result<T> = Promise<T> | T;
 
@@ -50,8 +38,7 @@ type Result<T> = Promise<T> | T;
  *
  * @category Handler
  */
-export type RequestHandler<
-  T extends ActionName<V>,
-  Metadata = undefined,
-  V extends OCPPVersion = OCPPVersion,
-> = (request: Request<T, V>, extra: Metadata) => Result<Response<T, V>>;
+export type RequestHandler<T extends ActionName, Metadata = undefined> = (
+  request: Request<T>,
+  extra: Metadata,
+) => Result<Response<T>>;

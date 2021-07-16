@@ -31,11 +31,10 @@ so when using this it is advisable to do type assertions.
 **Signature**
 
 ```ts
-export type RequestHandler<
-  T extends ActionName<V>,
-  Metadata = undefined,
-  V extends OCPPVersion = OCPPVersion,
-> = (request: Request<T, V>, extra: Metadata) => Result<Response<T, V>>;
+export type RequestHandler<T extends ActionName, Metadata = undefined> = (
+  request: Request<T>,
+  extra: Metadata,
+) => Result<Response<T>>;
 ```
 
 # Message Type
@@ -45,10 +44,7 @@ export type RequestHandler<
 **Signature**
 
 ```ts
-export type Request<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<
-  T,
-  V
->["request"];
+export type Request<T extends ActionName> = ReqRes<T>["request"];
 ```
 
 **Example**
@@ -64,10 +60,7 @@ type ChargeRelatedRequest = Request<"StartTransaction" | "StopTransaction">;
 **Signature**
 
 ```ts
-export type Response<T extends ActionName<V>, V extends OCPPVersion = OCPPVersion> = ReqRes<
-  T,
-  V
->["response"];
+export type Response<T extends ActionName> = ReqRes<T>["response"];
 ```
 
 **Example**
@@ -85,7 +78,5 @@ type ChargeRelatedResponse = Response<"StartTransaction" | "StopTransaction">;
 **Signature**
 
 ```ts
-export type ActionName<V extends OCPPVersion = OCPPVersion> =
-  | ChargePointAction<V>
-  | CentralSystemAction<V>;
+export type ActionName = ChargePointAction | CentralSystemAction;
 ```

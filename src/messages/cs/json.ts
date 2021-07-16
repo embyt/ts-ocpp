@@ -1,83 +1,83 @@
-import type * as request from '../json/request';
-import type * as response from '../json/response';
+import type * as request from "../json/request";
+import type * as response from "../json/response";
 
 type CentralSystemMessage = {
   CancelReservation: {
-    request: request.CancelReservationRequest & { action: 'CancelReservation', ocppVersion: 'v1.6-json' },
-    response: response.CancelReservationResponse & { action: 'CancelReservation', ocppVersion: 'v1.6-json' },
-  },
+    request: request.CancelReservationRequest & { action: "CancelReservation" };
+    response: response.CancelReservationResponse & { action: "CancelReservation" };
+  };
   ChangeAvailability: {
-    request: request.ChangeAvailabilityRequest & { action: 'ChangeAvailability', ocppVersion: 'v1.6-json' },
-    response: response.ChangeAvailabilityResponse & { action: 'ChangeAvailability', ocppVersion: 'v1.6-json' },
-  },
+    request: request.ChangeAvailabilityRequest & { action: "ChangeAvailability" };
+    response: response.ChangeAvailabilityResponse & { action: "ChangeAvailability" };
+  };
   ChangeConfiguration: {
-    request: request.ChangeConfigurationRequest & { action: 'ChangeConfiguration', ocppVersion: 'v1.6-json' },
-    response: response.ChangeConfigurationResponse & { action: 'ChangeConfiguration', ocppVersion: 'v1.6-json' },
-  },
+    request: request.ChangeConfigurationRequest & { action: "ChangeConfiguration" };
+    response: response.ChangeConfigurationResponse & { action: "ChangeConfiguration" };
+  };
   ClearCache: {
-    request: request.ClearCacheRequest & { action: 'ClearCache', ocppVersion: 'v1.6-json' },
-    response: response.ClearCacheResponse & { action: 'ClearCache', ocppVersion: 'v1.6-json' },
-  },
+    request: request.ClearCacheRequest & { action: "ClearCache" };
+    response: response.ClearCacheResponse & { action: "ClearCache" };
+  };
   ClearChargingProfile: {
-    request: request.ClearChargingProfileRequest & { action: 'ClearChargingProfile', ocppVersion: 'v1.6-json' },
-    response: response.ClearChargingProfileResponse & { action: 'ClearChargingProfile', ocppVersion: 'v1.6-json' },
-  },
+    request: request.ClearChargingProfileRequest & { action: "ClearChargingProfile" };
+    response: response.ClearChargingProfileResponse & { action: "ClearChargingProfile" };
+  };
   DataTransfer: {
-    request: request.DataTransferRequest & { action: 'DataTransfer', ocppVersion: 'v1.6-json' },
-    response: response.DataTransferResponse & { action: 'DataTransfer', ocppVersion: 'v1.6-json' },
-  },
+    request: request.DataTransferRequest & { action: "DataTransfer" };
+    response: response.DataTransferResponse & { action: "DataTransfer" };
+  };
   GetCompositeSchedule: {
-    request: request.GetCompositeScheduleRequest & { action: 'GetCompositeSchedule', ocppVersion: 'v1.6-json' },
-    response: response.GetCompositeScheduleResponse & { action: 'GetCompositeSchedule', ocppVersion: 'v1.6-json' },
-  },
+    request: request.GetCompositeScheduleRequest & { action: "GetCompositeSchedule" };
+    response: response.GetCompositeScheduleResponse & { action: "GetCompositeSchedule" };
+  };
   GetConfiguration: {
-    request: request.GetConfigurationRequest & { action: 'GetConfiguration', ocppVersion: 'v1.6-json' },
-    response: response.GetConfigurationResponse & { action: 'GetConfiguration', ocppVersion: 'v1.6-json' },
-  },
+    request: request.GetConfigurationRequest & { action: "GetConfiguration" };
+    response: response.GetConfigurationResponse & { action: "GetConfiguration" };
+  };
   GetDiagnostics: {
-    request: request.GetDiagnosticsRequest & { action: 'GetDiagnostics', ocppVersion: 'v1.6-json' },
-    response: response.GetDiagnosticsResponse & { action: 'GetDiagnostics', ocppVersion: 'v1.6-json' },
-  },
+    request: request.GetDiagnosticsRequest & { action: "GetDiagnostics" };
+    response: response.GetDiagnosticsResponse & { action: "GetDiagnostics" };
+  };
   GetLocalListVersion: {
-    request: request.GetLocalListVersionRequest & { action: 'GetLocalListVersion', ocppVersion: 'v1.6-json' },
-    response: response.GetLocalListVersionResponse & { action: 'GetLocalListVersion', ocppVersion: 'v1.6-json' },
-  },
+    request: request.GetLocalListVersionRequest & { action: "GetLocalListVersion" };
+    response: response.GetLocalListVersionResponse & { action: "GetLocalListVersion" };
+  };
   RemoteStartTransaction: {
-    request: request.RemoteStartTransactionRequest & { action: 'RemoteStartTransaction', ocppVersion: 'v1.6-json' },
-    response: response.RemoteStartTransactionResponse & { action: 'RemoteStartTransaction', ocppVersion: 'v1.6-json' },
-  },
+    request: request.RemoteStartTransactionRequest & { action: "RemoteStartTransaction" };
+    response: response.RemoteStartTransactionResponse & { action: "RemoteStartTransaction" };
+  };
   RemoteStopTransaction: {
-    request: request.RemoteStopTransactionRequest & { action: 'RemoteStopTransaction', ocppVersion: 'v1.6-json' },
-    response: response.RemoteStopTransactionResponse & { action: 'RemoteStopTransaction', ocppVersion: 'v1.6-json' },
-  },
+    request: request.RemoteStopTransactionRequest & { action: "RemoteStopTransaction" };
+    response: response.RemoteStopTransactionResponse & { action: "RemoteStopTransaction" };
+  };
   ReserveNow: {
-    request: request.ReserveNowRequest & { action: 'ReserveNow', ocppVersion: 'v1.6-json' },
-    response: response.ReserveNowResponse & { action: 'ReserveNow', ocppVersion: 'v1.6-json' },
-  },
+    request: request.ReserveNowRequest & { action: "ReserveNow" };
+    response: response.ReserveNowResponse & { action: "ReserveNow" };
+  };
   Reset: {
-    request: request.ResetRequest & { action: 'Reset', ocppVersion: 'v1.6-json' },
-    response: response.ResetResponse & { action: 'Reset', ocppVersion: 'v1.6-json' },
-  },
+    request: request.ResetRequest & { action: "Reset" };
+    response: response.ResetResponse & { action: "Reset" };
+  };
   SendLocalList: {
-    request: request.SendLocalListRequest & { action: 'SendLocalList', ocppVersion: 'v1.6-json' },
-    response: response.SendLocalListResponse & { action: 'SendLocalList', ocppVersion: 'v1.6-json' },
-  },
+    request: request.SendLocalListRequest & { action: "SendLocalList" };
+    response: response.SendLocalListResponse & { action: "SendLocalList" };
+  };
   TriggerMessage: {
-    request: request.TriggerMessageRequest & { action: 'TriggerMessage', ocppVersion: 'v1.6-json' },
-    response: response.TriggerMessageResponse & { action: 'TriggerMessage', ocppVersion: 'v1.6-json' },
-  },
+    request: request.TriggerMessageRequest & { action: "TriggerMessage" };
+    response: response.TriggerMessageResponse & { action: "TriggerMessage" };
+  };
   UnlockConnector: {
-    request: request.UnlockConnectorRequest & { action: 'UnlockConnector', ocppVersion: 'v1.6-json' },
-    response: response.UnlockConnectorResponse & { action: 'UnlockConnector', ocppVersion: 'v1.6-json' },
-  },
+    request: request.UnlockConnectorRequest & { action: "UnlockConnector" };
+    response: response.UnlockConnectorResponse & { action: "UnlockConnector" };
+  };
   UpdateFirmware: {
-    request: request.UpdateFirmwareRequest & { action: 'UpdateFirmware', ocppVersion: 'v1.6-json' },
-    response: response.UpdateFirmwareResponse & { action: 'UpdateFirmware', ocppVersion: 'v1.6-json' },
-  },
+    request: request.UpdateFirmwareRequest & { action: "UpdateFirmware" };
+    response: response.UpdateFirmwareResponse & { action: "UpdateFirmware" };
+  };
   SetChargingProfile: {
-    request: request.SetChargingProfileRequest & { action: 'SetChargingProfile', ocppVersion: 'v1.6-json' },
-    response: response.SetChargingProfileResponse & { action: 'SetChargingProfile', ocppVersion: 'v1.6-json' },
-  },
+    request: request.SetChargingProfileRequest & { action: "SetChargingProfile" };
+    response: response.SetChargingProfileResponse & { action: "SetChargingProfile" };
+  };
 };
 
 export default CentralSystemMessage;

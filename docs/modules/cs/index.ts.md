@@ -52,10 +52,9 @@ const centralSystem = new CentralSystem(3000, (req, { chargePointId }) => {
   switch (req.action) {
     case "Heartbeat":
       // returns a successful response
-      // (we pass the action and ocpp version so typescript knows which fields are needed)
+      // (we pass the action so typescript knows which fields are needed)
       return {
         action: req.action,
-        ocppVersion: req.ocppVersion,
         currentTime: new Date().toISOString(),
       };
   }
@@ -84,7 +83,7 @@ public close()
 **Signature**
 
 ```ts
-sendRequest<V extends OCPPVersion, T extends CentralSystemAction>(args: CSSendRequestArgs<T, V>): EitherAsync<OCPPRequestError, Response<T, V>>
+sendRequest<T extends CentralSystemAction>(args: CSSendRequestArgs<T>): EitherAsync<OCPPRequestError, Response<T>>
 ```
 
 # utils
@@ -94,10 +93,9 @@ sendRequest<V extends OCPPVersion, T extends CentralSystemAction>(args: CSSendRe
 **Signature**
 
 ```ts
-export type CSSendRequestArgs<T extends CentralSystemAction<V>, V extends OCPPVersion> = {
-  ocppVersion: "v1.6-json";
+export type CSSendRequestArgs<T extends CentralSystemAction> = {
   chargePointId: string;
-  payload: Omit<Request<T, V>, "action" | "ocppVersion">;
+  payload: Omit<Request<T>, "action">;
   action: T;
 };
 ```

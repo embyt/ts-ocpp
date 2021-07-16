@@ -1,15 +1,10 @@
-import { OCPPVersion, OCPPVersionV16 } from "../../types";
 import JSONCentralSystemMessage from "./json";
 
-type CentralSystemMessage<V extends OCPPVersion = OCPPVersion> = V extends OCPPVersionV16
-  ? JSONCentralSystemMessage
-  : never;
+type CentralSystemMessage = JSONCentralSystemMessage;
 
-export type CentralSystemAction<
-  V extends OCPPVersion = OCPPVersion
-> = keyof CentralSystemMessage<V>;
+export type CentralSystemAction = keyof CentralSystemMessage;
 
-export const centralSystemActions: CentralSystemAction<"v1.6-json">[] = [
+export const centralSystemActions: CentralSystemAction[] = [
   "CancelReservation",
   "ChangeAvailability",
   "ChangeConfiguration",
@@ -31,13 +26,9 @@ export const centralSystemActions: CentralSystemAction<"v1.6-json">[] = [
   "UpdateFirmware",
 ];
 
-export type CentralSystemRequest<
-  T extends CentralSystemAction,
-  V extends OCPPVersion = OCPPVersion
-> = CentralSystemMessage<V>[T]["request"];
-export type CentralSystemResponse<
-  T extends CentralSystemAction,
-  V extends OCPPVersion = OCPPVersion
-> = CentralSystemMessage<V>[T]["response"];
+export type CentralSystemRequest<T extends CentralSystemAction> =
+  CentralSystemMessage[T]["request"];
+export type CentralSystemResponse<T extends CentralSystemAction> =
+  CentralSystemMessage[T]["response"];
 
 export default CentralSystemMessage;

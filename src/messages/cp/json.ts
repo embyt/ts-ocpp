@@ -1,47 +1,53 @@
-import type * as request from '../json/request';
-import type * as response from '../json/response';
+import type * as request from "../json/request";
+import type * as response from "../json/response";
 
 type ChargePointMessage = {
   Authorize: {
-    request: request.AuthorizeRequest & { action: 'Authorize', ocppVersion: 'v1.6-json' },
-    response: response.AuthorizeResponse & { action: 'Authorize', ocppVersion: 'v1.6-json' },
+    request: request.AuthorizeRequest & { action: "Authorize" };
+    response: response.AuthorizeResponse & { action: "Authorize" };
   };
   BootNotification: {
-    request: request.BootNotificationRequest & { action: 'BootNotification', ocppVersion: 'v1.6-json' },
-    response: response.BootNotificationResponse & { action: 'BootNotification', ocppVersion: 'v1.6-json' },
+    request: request.BootNotificationRequest & { action: "BootNotification" };
+    response: response.BootNotificationResponse & { action: "BootNotification" };
   };
   DataTransfer: {
-    request: request.DataTransferRequest & { action: 'DataTransfer', ocppVersion: 'v1.6-json' },
-    response: response.DataTransferResponse & { action: 'DataTransfer', ocppVersion: 'v1.6-json' },
+    request: request.DataTransferRequest & { action: "DataTransfer" };
+    response: response.DataTransferResponse & { action: "DataTransfer" };
   };
   DiagnosticsStatusNotification: {
-    request: request.DiagnosticsStatusNotificationRequest & { action: 'DiagnosticsStatusNotification', ocppVersion: 'v1.6-json' },
-    response: response.DiagnosticsStatusNotificationResponse & { action: 'DiagnosticsStatusNotification', ocppVersion: 'v1.6-json' },
+    request: request.DiagnosticsStatusNotificationRequest & {
+      action: "DiagnosticsStatusNotification";
+    };
+    response: response.DiagnosticsStatusNotificationResponse & {
+      action: "DiagnosticsStatusNotification";
+    };
   };
   FirmwareStatusNotification: {
-    request: request.FirmwareStatusNotificationRequest & { action: 'FirmwareStatusNotification', ocppVersion: 'v1.6-json' },
-    response: response.FirmwareStatusNotificationResponse & { action: 'FirmwareStatusNotification', ocppVersion: 'v1.6-json' },
+    request: request.FirmwareStatusNotificationRequest & { action: "FirmwareStatusNotification" };
+    response: response.FirmwareStatusNotificationResponse & {
+      action: "FirmwareStatusNotification";
+    };
   };
   Heartbeat: {
-    request: request.HeartbeatRequest & { action: 'Heartbeat', ocppVersion: 'v1.6-json' },
-    response: response.HeartbeatResponse & { action: 'Heartbeat', ocppVersion: 'v1.6-json' },
+    request: request.HeartbeatRequest & { action: "Heartbeat" };
+    response: response.HeartbeatResponse & { action: "Heartbeat" };
   };
   MeterValues: {
-    request: request.MeterValuesRequest & { action: 'MeterValues', ocppVersion: 'v1.6-json' },
-    response: response.MeterValuesResponse & { action: 'MeterValues', ocppVersion: 'v1.6-json' },
+    request: request.MeterValuesRequest & { action: "MeterValues" };
+    response: response.MeterValuesResponse & { action: "MeterValues" };
   };
   StartTransaction: {
-    request: request.StartTransactionRequest & { action: 'StartTransaction', ocppVersion: 'v1.6-json' },
-    response: response.StartTransactionResponse & { action: 'StartTransaction', ocppVersion: 'v1.6-json' },
+    request: request.StartTransactionRequest & { action: "StartTransaction" };
+    response: response.StartTransactionResponse & { action: "StartTransaction" };
   };
   StatusNotification: {
-    request: request.StatusNotificationRequest & { action: 'StatusNotification', ocppVersion: 'v1.6-json' },
-    response: response.StatusNotificationResponse & { action: 'StatusNotification', ocppVersion: 'v1.6-json' },
+    request: request.StatusNotificationRequest & { action: "StatusNotification" };
+    response: response.StatusNotificationResponse & { action: "StatusNotification" };
   };
   StopTransaction: {
-    request: request.StopTransactionRequest & { action: 'StopTransaction', ocppVersion: 'v1.6-json' },
-    response: response.StopTransactionResponse & { action: 'StopTransaction', ocppVersion: 'v1.6-json' },
+    request: request.StopTransactionRequest & { action: "StopTransaction" };
+    response: response.StopTransactionResponse & { action: "StopTransaction" };
   };
-}
+};
 
 export default ChargePointMessage;

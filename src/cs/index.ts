@@ -9,7 +9,6 @@ import { Connection, SUPPORTED_PROTOCOLS } from "../ws";
 import { CentralSystemAction, centralSystemActions } from "../messages/cs";
 import { OCPPRequestError, ValidationError } from "../errors";
 import { EitherAsync, Left } from "purify-ts";
-import { OCPPVersion } from "../types";
 
 const handleProtocols = (protocols: string[]): string =>
   protocols.find((protocol) => SUPPORTED_PROTOCOLS.includes(protocol)) ?? "";
@@ -22,10 +21,9 @@ export type RequestMetadata = {
   validationError?: ValidationError;
 };
 
-export type CSSendRequestArgs<T extends CentralSystemAction<V>, V extends OCPPVersion> = {
-  ocppVersion: "v1.6-json";
+export type CSSendRequestArgs<T extends CentralSystemAction> = {
   chargePointId: string;
-  payload: Omit<Request<T, V>, "action" | "ocppVersion">;
+  payload: Omit<Request<T>, "action">;
   action: T;
 };
 
@@ -61,10 +59,9 @@ type RequiredPick<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
  *   switch (req.action) {
  *     case 'Heartbeat':
  *       // returns a successful response
- *       // (we pass the action and ocpp version so typescript knows which fields are needed)
+ *       // (we pass the action so typescript knows which fields are needed)
  *       return {
  *         action: req.action,
- *         ocppVersion: req.ocppVersion,
  *         currentTime: new Date().toISOString()
  *       };
  *   }
@@ -114,27 +111,23 @@ export default class CentralSystem {
     this.websocketsServer.close();
   }
 
-  sendRequest<V extends OCPPVersion, T extends CentralSystemAction>(
-    args: CSSendRequestArgs<T, V>,
-  ): EitherAsync<OCPPRequestError, Response<T, V>> {
+  sendRequest<T extends CentralSystemAction>(
+    args: CSSendRequestArgs<T>,
+  ): EitherAsync<OCPPRequestError, Response<T>> {
     return EitherAsync.fromPromise(async () => {
       const { chargePointId, payload, action } = args;
       if (!chargePointId) return Left(new OCPPRequestError("charge point id was not provided"));
       // @ts-ignore - TS somehow doesn't understand that this is right
-      const request: Request<T, V> = { ...payload, action, ocppVersion: args.ocppVersion };
+      const request: Request<T> = { ...payload, action };
 
-      switch (args.ocppVersion) {
-        case "v1.6-json": {
-          const connection = this.connections[args.chargePointId];
-          if (!connection)
-            return Left(new OCPPRequestError("there is no connection to this charge point"));
+      const connection = this.connections[args.chargePointId];
+      if (!connection)
+        return Left(new OCPPRequestError("there is no connection to this charge point"));
 
-          return connection.sendRequest(action, request as Request<T, "v1.6-json">) as EitherAsync<
-            OCPPRequestError,
-            Response<T, V>
-          >;
-        }
-      }
+      return connection.sendRequest(action, request as Request<T>) as EitherAsync<
+        OCPPRequestError,
+        Response<T>
+      >;
     });
   }
 

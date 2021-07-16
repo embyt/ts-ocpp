@@ -20,10 +20,9 @@ const centralSystem = new CentralSystem(3000, (req, { chargePointId }) => {
   switch (req.action) {
     case "Heartbeat":
       // returns a successful response
-      // (we pass the action and ocpp version so typescript knows which fields are needed)
+      // (we pass the action so typescript knows which fields are needed)
       return {
         action: req.action,
-        ocppVersion: req.ocppVersion,
         currentTime: new Date().toISOString(),
       };
   }
@@ -37,7 +36,6 @@ sending a request to the chargepoint "123":
 // Returns a Either(Error or Success) object(functional, will not throw on error)
 const response = await centralSystem.sendRequest({
   chargePointId: "123",
-  ocppVersion: "v1.6-json",
   action: "GetConfiguration",
   payload: {},
 });
@@ -57,10 +55,9 @@ const chargepoint = new ChargePoint(3001, (req) => {
   switch (action) {
     case "GetConfiguration":
       // returns a successful response
-      // (we pass the action and ocpp version so typescript knows which fields are needed)
+      // (we pass the action so typescript knows which fields are needed)
       return {
         action: req.action,
-        ocppVersion: req.ocppVersion,
         configurationKey: [],
       };
   }
@@ -71,5 +68,5 @@ const chargepoint = new ChargePoint(3001, (req) => {
 sending a request to the central system(see central system's section to understand the return type):
 
 ```typescript
-const response = await chargepoint.sendRequest({ action: 'Heartbeat', ocppVersion: '1.6-json', payload: {} );
+const response = await chargepoint.sendRequest({ action: 'Heartbeat', payload: {} );
 ```

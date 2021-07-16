@@ -4,12 +4,11 @@ const cs = new CentralSystem(
   8080,
   (req, metadata) => {
     console.log("new request from: ", metadata.chargePointId);
-    const { ocppVersion } = req;
     switch (req.action) {
       case "Heartbeat":
-        return { action: req.action, ocppVersion, currentTime: new Date().toISOString() };
+        return { action: req.action, currentTime: new Date().toISOString() };
       case "StatusNotification":
-        return { action: req.action, ocppVersion };
+        return { action: req.action };
     }
     throw new Error("not supported");
   },
@@ -27,7 +26,6 @@ if (process.env.SEND_COMMAND) {
   setTimeout(async () => {
     console.log("sending request");
     const response = await cs.sendRequest({
-      ocppVersion: "v1.6-json",
       action: "RemoteStartTransaction",
       chargePointId: "123",
       // chargePointUrl: 'http://localhost:12800',
