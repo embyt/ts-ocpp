@@ -92,8 +92,8 @@ export default class Connection<ReqAction extends ActionName> {
             id: message.id,
             type: MessageType.CALLERROR,
             errorCode: "GenericError",
-            errorDescription: `[${error}`,
-            errorDetails: fail,
+            errorDescription: `${error}`,
+            errorDetails: undefined,
           };
         }
       case MessageType.CALLERROR:
