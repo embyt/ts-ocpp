@@ -3,7 +3,6 @@ import ChargePoint from "./cp";
 import { ChargePointAction } from "./messages/cp";
 import { Request } from "./messages";
 import { CentralSystemAction } from "./messages/cs";
-import { Right } from "purify-ts";
 
 describe("test cs<->cp communication", () => {
   const connect = async (cp: ChargePoint, cs: CentralSystem) => {
@@ -95,14 +94,14 @@ describe("test cs<->cp communication", () => {
       const csResp = await cp.sendRequest({ action: "Heartbeat", payload: {} });
 
       expect((await waitCsReq).action).toBe("Heartbeat");
-      expect(csResp.map((resp) => resp.currentTime)).toStrictEqual(Right(currentTime));
+      expect(csResp.map((resp) => resp.currentTime)).toStrictEqual(currentTime);
 
       const cpResp = await cs.sendRequest({
         action: "GetConfiguration",
         chargePointId: "456",
         payload: {},
       });
-      expect(cpResp.map((resp) => resp.configurationKey?.[0].key)).toStrictEqual(Right("Test"));
+      expect(cpResp.map((resp) => resp.configurationKey?.[0].key)).toStrictEqual("Test");
     });
 
     it("rejects invalid message", async () => {
