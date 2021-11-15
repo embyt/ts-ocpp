@@ -80,4 +80,46 @@ type CentralSystemMessage = {
   };
 };
 
+export type CentralSystemRequests =
+  | request.CancelReservationRequest
+  | request.ChangeAvailabilityRequest
+  | request.ChangeConfigurationRequest
+  | request.ClearCacheRequest
+  | request.ClearChargingProfileRequest
+  | request.DataTransferRequest
+  | request.GetCompositeScheduleRequest
+  | request.GetConfigurationRequest
+  | request.GetDiagnosticsRequest
+  | request.GetLocalListVersionRequest
+  | request.RemoteStartTransactionRequest
+  | request.RemoteStopTransactionRequest
+  | request.ReserveNowRequest
+  | request.ResetRequest
+  | request.SendLocalListRequest
+  | request.TriggerMessageRequest
+  | request.UnlockConnectorRequest
+  | request.UpdateFirmwareRequest
+  | request.SetChargingProfileRequest;
+
+export type CentralSystemResponses =
+  | response.CancelReservationResponse
+  | response.ChangeAvailabilityResponse
+  | response.ChangeConfigurationResponse
+  | response.ClearCacheResponse
+  | response.ClearChargingProfileResponse
+  | response.DataTransferResponse
+  | response.GetCompositeScheduleResponse
+  | response.GetConfigurationResponse
+  | response.GetDiagnosticsResponse
+  | response.GetLocalListVersionResponse
+  | response.RemoteStartTransactionResponse
+  | response.RemoteStopTransactionResponse
+  | response.ReserveNowResponse
+  | response.ResetResponse
+  | response.SendLocalListResponse
+  | response.TriggerMessageResponse
+  | response.UnlockConnectorResponse
+  | response.UpdateFirmwareResponse
+  | response.SetChargingProfileResponse;
+
 export default CentralSystemMessage;

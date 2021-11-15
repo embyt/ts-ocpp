@@ -50,4 +50,28 @@ type ChargePointMessage = {
   };
 };
 
+export type ChargePointRequests =
+  | request.AuthorizeRequest
+  | request.BootNotificationRequest
+  | request.DataTransferRequest
+  | request.DiagnosticsStatusNotificationRequest
+  | request.FirmwareStatusNotificationRequest
+  | request.HeartbeatRequest
+  | request.MeterValuesRequest
+  | request.StartTransactionRequest
+  | request.StatusNotificationRequest
+  | request.StopTransactionRequest;
+
+export type ChargePointResponses =
+  | response.AuthorizeResponse
+  | response.BootNotificationResponse
+  | response.DataTransferResponse
+  | response.DiagnosticsStatusNotificationResponse
+  | response.FirmwareStatusNotificationResponse
+  | response.HeartbeatResponse
+  | response.MeterValuesResponse
+  | response.StartTransactionResponse
+  | response.StatusNotificationResponse
+  | response.StopTransactionResponse;
+
 export default ChargePointMessage;
