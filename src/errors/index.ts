@@ -4,17 +4,13 @@ export class GenericError extends Error {
   wrap(error: Error): this {
     return {
       ...this,
-      message: `${this.message}: ${error.message}`
-    }
+      message: `${this.message}: ${error.message}`,
+    };
   }
 }
 
 export class ValidationError extends GenericError {
   name = "ValidationError";
-}
-
-export class OCPPApplicationError extends GenericError {
-  name = "OCPPApplicationError";
 }
 
 export class OCPPRequestError extends GenericError {
@@ -23,7 +19,7 @@ export class OCPPRequestError extends GenericError {
     readonly message: string,
     readonly errorCode?: ErrorCode,
     readonly errorDescription?: string,
-    readonly errorDetails?: object
+    readonly errorDetails?: object,
   ) {
     super();
   }

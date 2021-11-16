@@ -8,7 +8,6 @@ import { ChargePointAction, chargePointActions } from "../messages/cp";
 import { Connection, SUPPORTED_PROTOCOLS } from "../ws";
 import { CentralSystemAction, centralSystemActions } from "../messages/cs";
 import { OCPPRequestError, ValidationError } from "../errors";
-import { EitherAsync, Left } from "purify-ts";
 
 const handleProtocols = (protocols: string[]): string =>
   protocols.find((protocol) => SUPPORTED_PROTOCOLS.includes(protocol)) ?? "";
@@ -111,24 +110,16 @@ export default class CentralSystem {
     this.websocketsServer.close();
   }
 
-  sendRequest<T extends CentralSystemAction>(
-    args: CSSendRequestArgs<T>,
-  ): EitherAsync<OCPPRequestError, Response<T>> {
-    return EitherAsync.fromPromise(async () => {
-      const { chargePointId, payload, action } = args;
-      if (!chargePointId) return Left(new OCPPRequestError("charge point id was not provided"));
-      // @ts-ignore - TS somehow doesn't understand that this is right
-      const request: Request<T> = { ...payload, action };
+  sendRequest<T extends CentralSystemAction>(args: CSSendRequestArgs<T>): Promise<Response<T>> {
+    const { chargePointId, payload, action } = args;
+    if (!chargePointId) throw new OCPPRequestError("charge point id was not provided");
+    // @ts-ignore - TS somehow doesn't understand that this is right
+    const request: Request<T> = { ...payload, action };
 
-      const connection = this.connections[args.chargePointId];
-      if (!connection)
-        return Left(new OCPPRequestError("there is no connection to this charge point"));
+    const connection = this.connections[args.chargePointId];
+    if (!connection) throw new OCPPRequestError("there is no connection to this charge point");
 
-      return connection.sendRequest(action, request as Request<T>) as EitherAsync<
-        OCPPRequestError,
-        Response<T>
-      >;
-    });
+    return connection.sendRequest(action, request as Request<T>);
   }
 
   /** @internal */
