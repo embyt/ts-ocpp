@@ -1,16 +1,14 @@
-import { MessageType, OCPPJMessage, OCPPJRawMessage } from './types';
-import { ValidationError } from '../errors';
-import { Either, Left, Right } from 'purify-ts';
+import WebSocket from "ws";
+import { Either, Left, Right } from "purify-ts";
 
-export const parseOCPPMessage = (raw: OCPPJRawMessage): Either<ValidationError, OCPPJMessage> => {
+import { MessageType, OCPPJMessage } from "./types";
+import { ValidationError } from "../errors";
+
+export const parseOCPPMessage = (raw: WebSocket.Data): Either<ValidationError, OCPPJMessage> => {
   try {
-    if (typeof raw !== 'string') return Left(new ValidationError('only string is supported'));
+    if (typeof raw !== "string") return Left(new ValidationError("only string is supported"));
 
-    const [
-      type,
-      id,
-      ...rest
-    ] = JSON.parse(raw) as Array<any>;
+    const [type, id, ...rest] = JSON.parse(raw) as Array<any>;
     switch (type as MessageType) {
       case MessageType.CALL: {
         const [action, payload] = rest;
@@ -18,7 +16,7 @@ export const parseOCPPMessage = (raw: OCPPJRawMessage): Either<ValidationError, 
           type: MessageType.CALL,
           id,
           action,
-          ...(payload ? { payload } : {})
+          ...(payload ? { payload } : {}),
         });
       }
       case MessageType.CALLRESULT: {
@@ -26,7 +24,7 @@ export const parseOCPPMessage = (raw: OCPPJRawMessage): Either<ValidationError, 
         return Right({
           type: MessageType.CALLRESULT,
           id,
-          ...(payload ? { payload } : {})
+          ...(payload ? { payload } : {}),
         });
       }
       case MessageType.CALLERROR: {
@@ -39,13 +37,15 @@ export const parseOCPPMessage = (raw: OCPPJRawMessage): Either<ValidationError, 
           ...(errorDetails ? { errorDetails } : {}),
         });
       }
-      default: return Left(new ValidationError(`Not supported message type: ${type}`));
+      default:
+        return Left(new ValidationError(`Not supported message type: ${type}`));
     }
   } catch (err) {
-    return Left(new ValidationError(`An error occurred when trying to parse message: "${raw}"`).wrap(err))
+    return Left(
+      new ValidationError(`An error occurred when trying to parse message: "${raw}"`).wrap(err),
+    );
   }
 };
-
 
 export const stringifyOCPPMessage = (message: OCPPJMessage): string => {
   switch (message.type) {
@@ -59,7 +59,13 @@ export const stringifyOCPPMessage = (message: OCPPJMessage): string => {
     }
     case MessageType.CALLERROR: {
       const { type, id, errorCode, errorDescription, errorDetails } = message;
-      return JSON.stringify([type, id, errorCode, errorDescription, ...(errorDetails ? [errorDetails] : [])]);
+      return JSON.stringify([
+        type,
+        id,
+        errorCode,
+        errorDescription,
+        ...(errorDetails ? [errorDetails] : []),
+      ]);
     }
   }
 };
