@@ -137,7 +137,12 @@ export default class CentralSystem {
       socket.close();
       return;
     }
+    // determine and translate chargepoint identifier
     let chargePointId = httpRequest.url?.split("/").pop();
+    // strip potential site identifiers like keba1@Hotel 23
+    if (chargePointId?.includes("@") && chargePointId.split("@")[0]) {
+      chargePointId = chargePointId.split("@")[0];
+    }
     // also allow charge point ids in format "?<chargePoint>", which is needed if
     // path matching is not supported by ocpp backend (like AWS AppGateway)
     if (chargePointId?.includes("?") && chargePointId.split("?")[1]) {
@@ -151,6 +156,7 @@ export default class CentralSystem {
       socket.close();
       return;
     }
+
     this.listeners.forEach((f) => f(chargePointId!, "connected"));
 
     const metadata: RequestMetadata = { chargePointId, httpRequest };
