@@ -137,13 +137,21 @@ export default class CentralSystem {
       socket.close();
       return;
     }
-    const chargePointId = httpRequest.url?.split("/").pop();
+    let chargePointId = httpRequest.url?.split("/").pop();
+    // also allow charge point ids in format "?<chargePoint>", which is needed if
+    // path matching is not supported by ocpp backend (like AWS AppGateway)
+    if (chargePointId?.includes("?") && chargePointId.split("?")[1]) {
+      chargePointId = chargePointId.split("?")[1];
+    }
+    // also allow charge point ids in format "?chargerId=<chargePoint>", just in case
+    if (chargePointId?.includes("=") && chargePointId.split("=")[1]) {
+      chargePointId = chargePointId.split("=")[1];
+    }
     if (!chargePointId) {
       socket.close();
       return;
     }
-
-    this.listeners.forEach((f) => f(chargePointId, "connected"));
+    this.listeners.forEach((f) => f(chargePointId!, "connected"));
 
     const metadata: RequestMetadata = { chargePointId, httpRequest };
 
@@ -168,9 +176,9 @@ export default class CentralSystem {
       connection.handleWebsocketData(data);
     });
     socket.on("close", () => {
-      delete this.connections[chargePointId];
+      delete this.connections[chargePointId!];
       clearInterval(pingInterval);
-      this.listeners.forEach((f) => f(chargePointId, "disconnected"));
+      this.listeners.forEach((f) => f(chargePointId!, "disconnected"));
     });
   }
 }
