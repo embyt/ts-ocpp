@@ -132,13 +132,13 @@ export default class CentralSystem {
   }
 
   /** @internal */
-  private handleConnection(socket: WebSocket, httpRequest: IncomingMessage) {
-    if (!socket.protocol) {
-      socket.close();
-      return;
-    }
+  private decodeChargepointId(url: string | undefined) {
     // determine and translate chargepoint identifier
-    let chargePointId = httpRequest.url?.split("/").pop();
+    let chargePointId = url?.split("/").pop();
+    // decode url to convert %20 to blanks
+    if (chargePointId) {
+      chargePointId = decodeURI(chargePointId);
+    }
     // strip potential site identifiers like keba1@Hotel 23
     if (chargePointId?.includes("@") && chargePointId.split("@")[0]) {
       chargePointId = chargePointId.split("@")[0];
@@ -152,6 +152,17 @@ export default class CentralSystem {
     if (chargePointId?.includes("=") && chargePointId.split("=")[1]) {
       chargePointId = chargePointId.split("=")[1];
     }
+    return chargePointId;
+  }
+
+  /** @internal */
+  private handleConnection(socket: WebSocket, httpRequest: IncomingMessage) {
+    if (!socket.protocol) {
+      socket.close();
+      return;
+    }
+    // determine and translate chargepoint identifier
+    const chargePointId = this.decodeChargepointId(httpRequest.url);
     if (!chargePointId) {
       socket.close();
       return;
