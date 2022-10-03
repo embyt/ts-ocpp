@@ -41,7 +41,8 @@ export const parseOCPPMessage = (raw: WebSocket.Data): OCPPJMessage => {
         throw new ValidationError(`Not supported message type: ${type}`);
     }
   } catch (err) {
-    throw new ValidationError(`An error occurred when trying to parse message: "${raw}"`);
+    //throw new ValidationError(`An error occurred when trying to parse message: "${raw}"`);
+    throw new ValidationError(`Error trying to parse message: ${(err as Error).message}: "${raw}"`);
   }
 };
 
