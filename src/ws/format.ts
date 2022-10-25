@@ -5,7 +5,7 @@ import WebSocket from "ws";
 export const parseOCPPMessage = (raw: WebSocket.Data): OCPPJMessage => {
   try {
     if (typeof raw !== "string") {
-      throw new ValidationError("only string is supported");
+      throw new ValidationError(`only string is supported, not ${raw.constructor.name}`);
     }
 
     const [type, id, ...rest] = JSON.parse(raw) as Array<any>;
