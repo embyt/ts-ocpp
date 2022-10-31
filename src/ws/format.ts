@@ -3,12 +3,17 @@ import { ValidationError } from "../errors";
 import WebSocket from "ws";
 
 export const parseOCPPMessage = (raw: WebSocket.Data): OCPPJMessage => {
+  let rawString: string;
   try {
-    if (typeof raw !== "string") {
-      throw new ValidationError(`only string is supported, not ${raw.constructor.name}`);
+    if (typeof raw === "string") {
+      rawString = raw;
+    } else if (raw.constructor.name === "Buffer") {
+      rawString = raw.toString();
+    } else {
+      throw new ValidationError(`unsupported data type (${raw.constructor.name})`);
     }
 
-    const [type, id, ...rest] = JSON.parse(raw) as Array<any>;
+    const [type, id, ...rest] = JSON.parse(rawString) as Array<any>;
     switch (type as MessageType) {
       case MessageType.CALL: {
         const [action, payload] = rest;
