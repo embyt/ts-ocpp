@@ -9,8 +9,14 @@ import { Connection, SUPPORTED_PROTOCOLS } from "../ws";
 import { CentralSystemAction, centralSystemActions } from "../messages/cs";
 import { OCPPRequestError, ValidationError } from "../errors";
 
-const handleProtocols = (protocols: string[]): string =>
-  protocols.find((protocol) => SUPPORTED_PROTOCOLS.includes(protocol)) ?? "";
+const handleProtocols = (protocols: string[] | Set<string>): string => {
+  // string[] in ws < 8.0
+  if (Array.isArray(protocols)) {
+    return protocols.find((protocol) => SUPPORTED_PROTOCOLS.includes(protocol)) ?? "";
+  }
+  // Set<string> in ws >= 8.0
+  return SUPPORTED_PROTOCOLS.find((protocol) => protocols.has(protocol)) ?? "";
+};
 
 type ConnectionListener = (cpId: string, status: "disconnected" | "connected") => void;
 
