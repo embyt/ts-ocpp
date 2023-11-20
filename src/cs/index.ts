@@ -122,8 +122,8 @@ export default class CentralSystem {
     // @ts-ignore - TS somehow doesn't understand that this is right
     const request: Request<T> = { ...payload, action };
 
-    const connection = this.connections[args.chargePointId];
-    if (!connection) throw new OCPPRequestError("there is no connection to this charge point");
+    const connection = this.connections[chargePointId];
+    if (!connection) throw new OCPPRequestError(`there is no connection to this charge point: ${chargePointId}`);
 
     return connection.sendRequest(action, request as Request<T>);
   }

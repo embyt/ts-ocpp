@@ -97,8 +97,19 @@ export default class Connection<ReqAction extends ActionName> {
           };
         }
       case MessageType.CALLERROR:
+        try {
+          this.messageTriggers[message.id](message);
+        } catch (error) {
+          console.error("cannot handle callerror", message, this.messageTriggers);
+        }
+        break;
       case MessageType.CALLRESULT:
-        this.messageTriggers[message.id](message);
+        try {
+          this.messageTriggers[message.id](message);
+        } catch (error) {
+          console.error("cannot handle callresult", message, this.messageTriggers);
+        }
+        break;
     }
   }
 }

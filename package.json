@@ -1,7 +1,7 @@
 {
   "name": "ts-ocpp",
   "description": "OCPP (Open Charge Point Protocol) implemented in Typescript",
-  "version": "2.5.9",
+  "version": "2.5.10",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/embyt/ts-ocpp",
